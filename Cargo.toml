@@ -2,7 +2,14 @@
 name = "ctl10n"
 version = "0.1.0"
 authors = ["Maximilian Siling <mouse-art@ya.ru>"]
+categories = ["development-tools::build-utils", "internationalization"]
+description = "Compile-time localization library"
 edition = "2018"
+homepage = "https://github.com/GoldsteinE/ctl10n"
+keywords = ["localisation", "internationalization", "l10n", "i18n"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/GoldsteinE/ctl10n"
 
 [dependencies]
 toml = "0.5.6"
