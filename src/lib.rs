@@ -127,7 +127,7 @@ pub fn gen_strings_macro(input: &str) -> Result<String> {
     let values = kv.iter().map(|(_, snd)| snd);
 
     let result = quote! {
-        macro_rules! clt10n_tr_inner {
+        macro_rules! ctl10n_tr_inner {
             #( (#keys) => { #values } );*;
             ($key:tt) => {
                 compile_error!(concat!("There is no string for key `", stringify!($key), "`"))
@@ -135,8 +135,8 @@ pub fn gen_strings_macro(input: &str) -> Result<String> {
         }
 
         macro_rules! tr {
-            ($key:tt) => { clt10n_tr_inner!($key) };
-            ($key:tt, $( $args:tt )* ) => { &format!(clt10n_tr_inner!($key), $( $args )* ) };
+            ($key:tt) => { ctl10n_tr_inner!($key) };
+            ($key:tt, $( $args:tt )* ) => { format!(ctl10n_tr_inner!($key), $( $args )* ) };
         }
     };
     Ok(result.to_string())
