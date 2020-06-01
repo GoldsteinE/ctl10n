@@ -2,7 +2,7 @@
 
 ctl10n (compile time localization) provides you a simple way to embed messages
 into binary file without embedding them into source. Internally, ctl10n generates
-simple `macro_rules!` macro `tr!()` from provided a TOML file with strings.
+a simple `macro_rules!` macro `tr!()` from the provided a TOML file with strings.
 
 ## Basic usage
 Add ctl10n to your `build-dependencies` in your `Cargo.toml`.
