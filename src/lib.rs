@@ -69,21 +69,27 @@
 //! You can use environment variables to provide a different locale at compile time:
 //!
 //! ```
-//! use ctl10n;
 //! use std::env;
+//! use std::path::Path;
+//!
+//! use ctl10n;
+//!
+//! const LOCALES: &[&str] = &["de", "en"];
 //!
 //! fn main() {
-//!     println!("cargo:rerun-if-changed=build.rs");
-//!     println!("cargo:rerun-if-changed=locales/*.toml");
-//!     if let Err(err) = ctl10n::convert_strings_file(
-//!         format!(
-//!             "locales/{}.toml",
-//!             &env::var("LOCALE").unwrap_or("en".to_string())
-//!         ),
-//!         "strings.rs",
-//!     ) {
-//!         panic!("{}", err);
+//!     for locale in LOCALES {
+//!         println!("cargo:rerun-if-changed=locales/{}.toml", locale);
 //!     }
+//!     println!("cargo:rerun-if-env-changed=LOCALE");
+//!     let locale_file = format!(
+//!         "locales/{}.toml",
+//!         &env::var("LOCALE").unwrap_or("en".to_string())
+//!     );
+//!     let out_file = Path::new(&env::var("OUT_DIR").unwrap()).join("strings.rs");
+//!     // Possible errors: No such file or directory, Path is a directory, The user lacks permissions to remove the file
+//!     // We want to ignore the first error and the other two are catched by ctl10n anyway.
+//!     let _ignore_error = std::fs::remove_file(&out_file);
+//!     ctl10n::convert_strings_file(locale_file, out_file).expect("ctl10n failed");
 //! }
 //! ```
 //!
